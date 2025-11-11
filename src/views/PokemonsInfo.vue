@@ -112,6 +112,7 @@
     </section>
     <section class="section-table">
       <router-link to="/pokemons_table" class="section-table__button">Все Покемоны</router-link>
+      <div class="section-table__body">
       <div v-for="row in [arr1, arr2, arr3, arr4]" class="section-table__line">
         <router-link
           :to="`/pokemons/${pokemon.name}`"
@@ -125,6 +126,7 @@
           </figure>
         </router-link>
       </div>
+    </div>
     </section>
   </main>
 </template>
@@ -135,10 +137,10 @@ import { computed, onMounted, ref, useTemplateRef } from 'vue'
 
 const pokemonsStore = usePokemonsStore()
 
-const arr1 = computed(() => pokemonsStore.currentPokemonsList.slice(0, 5))
-const arr2 = computed(() => pokemonsStore.currentPokemonsList.slice(5, 10))
-const arr3 = computed(() => pokemonsStore.currentPokemonsList.slice(10, 15))
-const arr4 = computed(() => pokemonsStore.currentPokemonsList.slice(15, 20))
+const arr1 = computed(() => [...pokemonsStore.currentPokemonsList.slice(0, 5),...pokemonsStore.currentPokemonsList.slice(0, 5),...pokemonsStore.currentPokemonsList.slice(0, 5),...pokemonsStore.currentPokemonsList.slice(0, 5)])
+const arr2 = computed(() => [...pokemonsStore.currentPokemonsList.slice(5, 10),...pokemonsStore.currentPokemonsList.slice(5, 10),...pokemonsStore.currentPokemonsList.slice(5, 10),...pokemonsStore.currentPokemonsList.slice(5, 10)])
+const arr3 = computed(() => [...pokemonsStore.currentPokemonsList.slice(10, 15),...pokemonsStore.currentPokemonsList.slice(10, 15),...pokemonsStore.currentPokemonsList.slice(10, 15),...pokemonsStore.currentPokemonsList.slice(10, 15)])
+const arr4 = computed(() => [...pokemonsStore.currentPokemonsList.slice(15, 20),...pokemonsStore.currentPokemonsList.slice(15, 20),...pokemonsStore.currentPokemonsList.slice(15, 20),...pokemonsStore.currentPokemonsList.slice(15, 20)])
 
 const observerDiv = useTemplateRef('observer')
 onMounted(async () => {
@@ -378,6 +380,11 @@ onMounted(async () => {
   }
 }
 
+.section-table__line:has(.pokemon:hover) {
+  position: relative;
+  z-index: 99;
+}
+
 .pokemon {
   border: 1px solid black;
   background: #2a7b9b;
@@ -410,6 +417,31 @@ onMounted(async () => {
   }
   &:hover &_name {
     bottom: 0;
+  }
+}
+
+.section-table__line:nth-child(even) {
+  animation: cicleToTheLeft 5s linear infinite;
+}
+.section-table__line:nth-child(odd) {
+  animation: cicleToTheRight 5s linear infinite;
+}
+
+@keyframes cicleToTheLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes cicleToTheRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(25%);
   }
 }
 </style>
