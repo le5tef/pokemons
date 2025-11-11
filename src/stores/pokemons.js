@@ -22,6 +22,9 @@ export const usePokemonsStore = defineStore('pokemons', {
     getTotalPages() {
       return Math.ceil(this.pokemonsList.length / 20)
     },
+    sortedPokemonsList() {
+      return this.currentPokemonsList.sort((a, b) => a.id - b.id)
+    },
   },
   actions: {
     async loadList(limit, page) {

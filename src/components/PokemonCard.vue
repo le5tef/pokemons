@@ -5,10 +5,13 @@
     </header>
     <figure class="card__content-body" :class="`color_${pokemon.type[0]}_border-bot`">
       <img
+        v-show="!imageLoading"
+        @load="imageLoading = false"
         :src="pokemon.img"
         class="card__content-body_image"
         :alt="`Изображение покемона ${pokemon.name}`"
       />
+      <div v-show="imageLoading" style="height:100px; width: 100px; background-color: red;">загрузка...</div>
       <figcaption class="card__content-body_name">{{ pokemon.name }}</figcaption>
     </figure>
     <footer class="card__content-footer" :class="`color_${pokemon.type[0]}_border-top`">
@@ -33,6 +36,9 @@
 <script setup>
 import HealthIcon from '@/assets/icons/HealthIcon.vue'
 import SwordIcon from '@/assets/icons/SwordIcon.vue'
+import { ref } from 'vue'
+
+const imageLoading = ref(true)
 
 const props = defineProps({
   pokemon: {

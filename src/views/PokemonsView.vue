@@ -13,7 +13,7 @@
     <section class="page__body" aria-label="Список покемонов">
       <router-link
         :to="`/pokemons/${pokemon.name}`"
-        v-for="pokemon in pokemonsStore.currentPokemonsList"
+        v-for="pokemon in pokemonsStore.sortedPokemonsList"
         :key="pokemon.name"
         class="card"
       >
