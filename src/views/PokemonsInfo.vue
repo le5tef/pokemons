@@ -113,15 +113,15 @@
     <section class="section-table">
       <router-link to="/pokemons_table" class="section-table__button">Все Покемоны</router-link>
       <div class="section-table__body">
-      <div v-for="row in [arr1, arr2, arr3, arr4]" class="section-table__line">
+      <div v-for="(row,id) in [[...arr1,...arr1,...arr1,...arr1], [...arr1,...arr1,...arr1,...arr1], [...arr1,...arr1,...arr1,...arr1], [...arr1,...arr1, ...arr1,...arr1], ]" class="section-table__line">
         <router-link
           :to="`/pokemons/${pokemon.name}`"
           class="pokemon"
           v-for="pokemon in row"
-          :key="pokemon.id"
+          :key="Math.random()*1000000"
         >
           <figure>
-            <img :src="pokemon.img" class="pokemon_image" />
+            <img :src="pokemon.img" class="pokemon_image" :key="id" />
             <figcaption class="pokemon_name">{{ pokemon.name }}</figcaption>
           </figure>
         </router-link>
@@ -137,10 +137,10 @@ import { computed, onMounted, ref, useTemplateRef } from 'vue'
 
 const pokemonsStore = usePokemonsStore()
 
-const arr1 = computed(() => [...pokemonsStore.currentPokemonsList.slice(0, 5),...pokemonsStore.currentPokemonsList.slice(0, 5),...pokemonsStore.currentPokemonsList.slice(0, 5),...pokemonsStore.currentPokemonsList.slice(0, 5)])
-const arr2 = computed(() => [...pokemonsStore.currentPokemonsList.slice(5, 10),...pokemonsStore.currentPokemonsList.slice(5, 10),...pokemonsStore.currentPokemonsList.slice(5, 10),...pokemonsStore.currentPokemonsList.slice(5, 10)])
-const arr3 = computed(() => [...pokemonsStore.currentPokemonsList.slice(10, 15),...pokemonsStore.currentPokemonsList.slice(10, 15),...pokemonsStore.currentPokemonsList.slice(10, 15),...pokemonsStore.currentPokemonsList.slice(10, 15)])
-const arr4 = computed(() => [...pokemonsStore.currentPokemonsList.slice(15, 20),...pokemonsStore.currentPokemonsList.slice(15, 20),...pokemonsStore.currentPokemonsList.slice(15, 20),...pokemonsStore.currentPokemonsList.slice(15, 20)])
+const arr1 = computed(() => pokemonsStore.sortedPokemonsList.slice(0, 5))
+const arr2 = computed(() => pokemonsStore.sortedPokemonsList.slice(5, 10))
+const arr3 = computed(() => pokemonsStore.sortedPokemonsList.slice(10, 15))
+const arr4 = computed(() => pokemonsStore.sortedPokemonsList.slice(15, 20))
 
 const observerDiv = useTemplateRef('observer')
 onMounted(async () => {
@@ -429,10 +429,10 @@ onMounted(async () => {
 
 @keyframes cicleToTheLeft {
   0% {
-    transform: translateX(0);
+    transform: translateX(25%);
   }
   100% {
-    transform: translateX(-25%);
+    transform: translateX(0);
   }
 }
 
